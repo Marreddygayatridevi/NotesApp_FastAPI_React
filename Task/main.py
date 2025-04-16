@@ -5,7 +5,6 @@ from auth import router as auth_router
 from Notes import router as notes_router
 from fastapi.middleware.cors import CORSMiddleware
 
-
 app = FastAPI()
 
 origins = [
@@ -20,9 +19,7 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-
-
 models.Base.metadata.create_all(bind=engine)
 
 app.include_router(auth_router)
-app.include_router(notes_router, tags=["Notes"])
+app.include_router(notes_router, prefix="/note", tags=["Notes"])
