@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api";
-import { Link } from "react-router-dom"; // Import Link from react-router-dom
+import { Link } from "react-router-dom";
 
 const Login = ({ setToken }) => {
   const [loginData, setLoginData] = useState({ username: "", password: "" });
@@ -10,12 +10,15 @@ const Login = ({ setToken }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await api.post("/auth/token", new URLSearchParams(loginData));
+      const res = await api.post(
+        "/auth/token",
+        new URLSearchParams(loginData)
+      );
       const accessToken = res.data.access_token;
       setToken(accessToken);
       localStorage.setItem("token", accessToken);
       api.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
-      navigate("/notes"); // ✅ Redirect after login
+      navigate("/notes");
     } catch (err) {
       alert("Invalid credentials");
     }
@@ -57,3 +60,5 @@ const Login = ({ setToken }) => {
 };
 
 export default Login;
+
+

@@ -11,7 +11,7 @@ function App() {
   useEffect(() => {
     if (token) {
       localStorage.setItem("token", token); // Store the token in local storage
-      api.defaults.headers.common["Authorization"] = `Bearer ${token}`; // Add the token to API request headers
+      api.defaults.headers.common["Authorization"] = `Bearer ${token}`; 
     }
   }, [token]);
 

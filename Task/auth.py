@@ -4,7 +4,6 @@ from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from starlette import status
-
 from database import SessionLocal
 from models import User
 from passlib.context import CryptContext
@@ -104,7 +103,7 @@ async def create_user(db: db_dependency, create_user_request: CreateUserRequest)
     return {"message": "User created successfully", "user_id": create_user_model.id}
 
 # User login route to get token
-@router.post("/token/", response_model=Token)
+@router.post("/token", response_model=Token)
 async def login_for_access_token(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], db: db_dependency):
     user = authenticate_user(form_data.username, form_data.password, db)
     if not user:
@@ -112,3 +111,5 @@ async def login_for_access_token(form_data: Annotated[OAuth2PasswordRequestForm,
 
     token = create_access_token(user.username, user.id, timedelta(hours=24))
     return {'access_token': token, 'token_type': 'bearer'}
+
+
